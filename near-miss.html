@@ -14,24 +14,23 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: transparent;
-            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 60px 40px;
+            padding: 20px;
         }
 
         .container {
             max-width: 1200px;
             width: 100%;
-            padding: 40px 20px;
+            padding: 10px;
         }
 
         h1 {
             text-align: center;
             color: #1f2937;
-            font-size: 2.5em;
-            margin-bottom: 50px;
+            font-size: 1.8em;
+            margin-bottom: 20px;
             text-shadow: none;
             animation: fadeInDown 1s ease-out;
         }
@@ -41,24 +40,24 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            gap: 30px;
+            gap: 20px;
             perspective: 1000px;
             flex-wrap: nowrap;
-            padding: 50px 20px;
+            padding: 20px 10px 40px 10px;
         }
 
         .severity-card {
             background: white;
-            border-radius: 20px;
-            padding: 40px 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 15px;
+            padding: 25px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             position: relative;
             overflow: hidden;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             animation: fadeInUp 1s ease-out;
-            width: 300px;
-            min-height: 320px;
+            width: 200px;
+            min-height: 240px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -105,9 +104,9 @@
         }
 
         .icon-container {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 25px;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -118,23 +117,23 @@
 
         .severity-card.high .icon-container {
             background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4);
+            box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4);
         }
 
         .severity-card.moderate .icon-container {
             background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
-            box-shadow: 0 10px 30px rgba(234, 179, 8, 0.4);
+            box-shadow: 0 5px 20px rgba(234, 179, 8, 0.4);
             animation-delay: 0.5s;
         }
 
         .severity-card.low .icon-container {
             background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-            box-shadow: 0 10px 30px rgba(22, 163, 74, 0.4);
+            box-shadow: 0 5px 20px rgba(22, 163, 74, 0.4);
             animation-delay: 1s;
         }
 
         .icon {
-            font-size: 50px;
+            font-size: 35px;
             color: white;
             animation: iconBounce 2s ease-in-out infinite;
             display: flex;
@@ -157,9 +156,9 @@
 
         .severity-title {
             text-align: center;
-            font-size: 1.8em;
+            font-size: 1.4em;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -179,8 +178,8 @@
         .severity-description {
             text-align: center;
             color: #4b5563;
-            font-size: 1.1em;
-            line-height: 1.6;
+            font-size: 0.95em;
+            line-height: 1.5;
             opacity: 0;
             max-height: 0;
             overflow: hidden;
@@ -190,7 +189,7 @@
         .severity-card:hover .severity-description {
             opacity: 1;
             max-height: 200px;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         .glow-effect {
@@ -292,7 +291,6 @@
 </head>
 <body>
     <div class="container">
-        <h1>Near Miss Severity Levels</h1>
         <div class="severity-grid">
             <div class="severity-card high">
                 <div class="glow-effect"></div>
