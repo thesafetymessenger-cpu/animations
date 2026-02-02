@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Near Miss Severity Levels</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: transparent;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1f2937;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            text-shadow: none;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .severity-grid {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            perspective: 1000px;
+            flex-wrap: nowrap;
+            padding: 50px 20px;
+        }
+
+        .severity-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease-out;
+            width: 300px;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .severity-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .severity-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .severity-card:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .severity-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+        }
+
+        .severity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .severity-card.high::before {
+            background: #dc2626;
+        }
+
+        .severity-card.moderate::before {
+            background: #eab308;
+        }
+
+        .severity-card.low::before {
+            background: #16a34a;
+        }
+
+        .icon-container {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .severity-card.high .icon-container {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4);
+        }
+
+        .severity-card.moderate .icon-container {
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+            box-shadow: 0 10px 30px rgba(234, 179, 8, 0.4);
+            animation-delay: 0.5s;
+        }
+
+        .severity-card.low .icon-container {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            box-shadow: 0 10px 30px rgba(22, 163, 74, 0.4);
+            animation-delay: 1s;
+        }
+
+        .icon {
+            font-size: 50px;
+            color: white;
+            animation: iconBounce 2s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .severity-card.high .icon {
+            animation-delay: 0s;
+        }
+
+        .severity-card.moderate .icon {
+            animation-delay: 0.3s;
+        }
+
+        .severity-card.low .icon {
+            animation-delay: 0.6s;
+        }
+
+        .severity-title {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .severity-card.high .severity-title {
+            color: #dc2626;
+        }
+
+        .severity-card.moderate .severity-title {
+            color: #eab308;
+        }
+
+        .severity-card.low .severity-title {
+            color: #16a34a;
+        }
+
+        .severity-description {
+            text-align: center;
+            color: #4b5563;
+            font-size: 1.1em;
+            line-height: 1.6;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.3s ease, max-height 0.3s ease, margin-top 0.3s ease;
+        }
+
+        .severity-card:hover .severity-description {
+            opacity: 1;
+            max-height: 200px;
+            margin-top: 15px;
+        }
+
+        .glow-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border-radius: 20px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .severity-card:hover .glow-effect {
+            opacity: 1;
+        }
+
+        .severity-card.high:hover .glow-effect {
+            box-shadow: inset 0 0 30px rgba(220, 38, 38, 0.2);
+        }
+
+        .severity-card.moderate:hover .glow-effect {
+            box-shadow: inset 0 0 30px rgba(234, 179, 8, 0.2);
+        }
+
+        .severity-card.low:hover .glow-effect {
+            box-shadow: inset 0 0 30px rgba(22, 163, 74, 0.2);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes iconBounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 30px;
+            }
+
+            .severity-grid {
+                gap: 20px;
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding: 0 20px;
+            }
+
+            .severity-card {
+                padding: 30px 20px;
+                width: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Near Miss Severity Levels</h1>
+        <div class="severity-grid">
+            <div class="severity-card high">
+                <div class="glow-effect"></div>
+                <div class="icon-container">
+                    <div class="icon">💀</div>
+                </div>
+                <div class="severity-title">High</div>
+                <div class="severity-description">
+                    Serious injury, fatality, or major damage was possible.
+                </div>
+            </div>
+
+            <div class="severity-card moderate">
+                <div class="glow-effect"></div>
+                <div class="icon-container">
+                    <div class="icon">⚠️</div>
+                </div>
+                <div class="severity-title">Moderate</div>
+                <div class="severity-description">
+                    Could have caused injury or property damage.
+                </div>
+            </div>
+
+            <div class="severity-card low">
+                <div class="glow-effect"></div>
+                <div class="icon-container">
+                    <div class="icon">✓</div>
+                </div>
+                <div class="severity-title">Low</div>
+                <div class="severity-description">
+                    Minimal risk; unlikely to cause injury or damage.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
